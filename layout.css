@@ -1,0 +1,54 @@
+body {
+   background-color: blanchedalmond;
+   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.container-grid {
+   display: grid;
+   height: 90vh;
+   grid-template-columns: repeat(3, 3fr);
+   gap: 10px;
+}
+
+.toolBar {
+   display: inline-block;
+   border: 0.1em solid black;
+   max-height: 40px;
+}
+
+.toolBox {
+   display: grid;
+   grid-column-start: 1;
+   grid-column-end: 2;
+   border: 1px dotted black;
+   grid-template-columns: repeat(2, 1fr);
+   justify-content: space-evenly;
+   padding: 10px;
+   gap: 10px;
+}
+
+.colorPalette {
+   grid-column-start: 1;
+   grid-column-end: 2;
+   border: 1px dotted black;
+   display: grid;
+   justify-content: space-evenly;
+   grid-template-columns: repeat(3, 1fr);
+   gap: 10px;
+   padding: 10px;
+   height: 150px;
+}
+
+.canvaslayout {
+   grid-column-start: 2;
+
+   grid-row-start: 1;
+   grid-row-end: 4;
+   border: 1px dotted black;
+   display: block;
+   width: auto;
+}
+
+#canvasBox {
+   margin: 10px;
+}

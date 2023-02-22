@@ -1,0 +1,44 @@
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Web Paint App</title>
+   <link rel="stylesheet" href="static/src/styles.css">
+   <link rel="stylesheet" href="static/src/layout.css">
+   <script src="static/src/script.js"></script>
+</head>
+
+<body onload="init()">
+   <div class="container-grid">
+      <div class="toolBar">
+         <button class="toolBarbtn">File</button>
+         <button class="toolBarbtn">Edit</button>
+         <button class="toolBarbtn">View</button>
+      </div>
+      <div class="toolBox">
+         <button class="toolBoxbtn" id="line" onclick="drawLine()">Line</button>
+         <button class="toolBoxbtn">Rectangle</button>
+         <button class="toolBoxbtn">Circle</button>
+         <button class="toolBoxbtn">Triangle</button>
+         <button class="toolBoxbtn">Text</button>
+         <button class="toolBoxbtn">Oval</button>
+      </div>
+      <div class="canvaslayout">
+         <canvas id="canvasBox" style="background-color: white;border: 2px solid black;">
+         </canvas>
+      </div>
+      <div class="colorPalette">
+         <button class="colorPalettebtn" style="background-color: #f44336;">RED</button>
+         <button class="colorPalettebtn" style="background-color:blue
+         ">BLUE</button>
+         <button class="colorPalettebtn" style="background-color: green;">GREEN</button>
+         <button class="colorPalettebtn" style="background-color: rgba(255, 255, 0, 0.877);">YELLOW</button>
+         <button class="colorPalettebtn" style="background-color: rgba(0, 0, 0, 0.89);color:white;">BLACK</button>
+         <button class="colorPalettebtn" style="background-color: white;">WHITE</button>
+      </div>
+   </div>
+</body>
+
+</html>
