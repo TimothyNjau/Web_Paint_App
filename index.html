@@ -10,16 +10,19 @@
    <script src="static/src/script.js"></script>
 </head>
 
-<body onload="init()">
+<body onload="canv_init()">
    <div class="container-grid">
       <div class="toolBar">
          <button class="toolBarbtn">File</button>
          <button class="toolBarbtn">Edit</button>
          <button class="toolBarbtn">View</button>
+         <div>
+            <input type="range" name="" id="">
+         </div>
       </div>
       <div class="toolBox">
          <button class="toolBoxbtn" id="line" onclick="drawLine()">Line</button>
-         <button class="toolBoxbtn">Rectangle</button>
+         <button class="toolBoxbtn" onclick="freeStyle()">Freestyle</button>
          <button class="toolBoxbtn">Circle</button>
          <button class="toolBoxbtn">Triangle</button>
          <button class="toolBoxbtn">Text</button>
@@ -30,13 +33,13 @@
          </canvas>
       </div>
       <div class="colorPalette">
-         <button class="colorPalettebtn" style="background-color: #f44336;">RED</button>
+         <button class="colorPalettebtn" style="background-color: #f44336;" id="red" onclick="colorClick(this)">RED</button>
          <button class="colorPalettebtn" style="background-color:blue
-         ">BLUE</button>
-         <button class="colorPalettebtn" style="background-color: green;">GREEN</button>
-         <button class="colorPalettebtn" style="background-color: rgba(255, 255, 0, 0.877);">YELLOW</button>
-         <button class="colorPalettebtn" style="background-color: rgba(0, 0, 0, 0.89);color:white;">BLACK</button>
-         <button class="colorPalettebtn" style="background-color: white;">WHITE</button>
+         " id="blue" onclick="colorClick(this)">BLUE</button>
+         <button class="colorPalettebtn" style="background-color: green;" id="green" onclick="colorClick(this)">GREEN</button>
+         <button class="colorPalettebtn" style="background-color: rgba(255, 255, 0, 0.877);" id="yellow" onclick="colorClick(this)">YELLOW</button>
+         <button class="colorPalettebtn" style="background-color: rgba(0, 0, 0, 0.89);color:white;" id="black" onclick="colorClick(this)">BLACK</button>
+         <button class="colorPalettebtn" style="background-color: white;" id="white" onclick="colorClick(this)">WHITE</button>
       </div>
    </div>
 </body>
