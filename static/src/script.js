@@ -5,7 +5,8 @@ let canvas, context,
    currY = 0,
    canvas_layout, //width & height of canvas 
    flag = false,
-   drop_flag = false;
+   drop_flag = false,
+   rangeSlide, outputDiv, thickness;
 
 
 let mouseX = 0, mouseY = 0, existingLines = [];
@@ -22,9 +23,28 @@ function canv_init() {
    canvas_layout = document.querySelector(".canvaslayout");
    w = canvas.width = canvas_layout.offsetWidth * 2;
    h = canvas.height = canvas_layout.offsetHeight
-
    context = canvas.getContext('2d');
+
+   rangeSlide = document.querySelector("#rangeSlider");
+   outputDiv = document.querySelector("#output");
+   slideChange();
 }
+
+function slideChange() {
+   rangeSlide.addEventListener("input", function () {
+      outputDiv.innerHTML = rangeSlide.value;
+      y = parseInt(rangeSlide.value);
+      console.log(y);
+      return y;
+   });
+}
+
+/*function changeThickness(){
+   slideChange();
+   thickness = rangeSlide.value;
+   console.log(thickness);
+   return thickness;
+}*/
 
 function colorClick(choice) {
    switch (choice.id) {
