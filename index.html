@@ -7,7 +7,7 @@
    <title>Web Paint App</title>
    <link rel="stylesheet" href="static/src/styles.css">
    <link rel="stylesheet" href="static/src/layout.css">
-   <script src="static/src/script.js"></script>
+   <script src="static/src/script2.js"></script>
 </head>
 
 <body onload="canv_init()">
@@ -20,19 +20,19 @@
          
          
          <div>
-            <input type="range" id="rangeSlider" value="0" min="1" max="15">
+            <input type="range" id="rangeSlider" value="2" min="1" max="15">
          </div>
          <div>
             <output id="output"></output>
          </div>
       </div>
       <div class="toolBox">
-         <button class="toolBoxbtn" id="line" onclick="drawLine()">Line</button>
-         <button class="toolBoxbtn" onclick="freeStyle()">Freestyle</button>
-         <button class="toolBoxbtn" onclick="drawCircle()">Circle</button>
-         <button class="toolBoxbtn" onclick="drawTriangle()">Triangle</button>
-         <button class="toolBoxbtn" onclick="drawRectangle()">Rectangle</button>
-         <button class="toolBoxbtn" onclick="erasefunc()">Eraser</button>
+         <button class="toolBoxbtn" id="line">Line</button>
+         <button class="toolBoxbtn active" id="freestyle">Freestyle</button>
+         <button class="toolBoxbtn" id="circle">Circle</button>
+         <button class="toolBoxbtn" id="triangle">Triangle</button>
+         <button class="toolBoxbtn" id="rectangle">Rectangle</button>
+         <button class="toolBoxbtn" id="eraser">Eraser</button>
       </div>
       <div class="canvaslayout">
          <canvas id="canvasBox" style="background-color: white;border: 2px solid black;">

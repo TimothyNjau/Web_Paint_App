@@ -57,27 +57,7 @@ function chooseListener(func) {
    }
 }
 function colorClick(choice) {
-   switch (choice.id) {
-      case 'red':
-         x = 'red';
-         console.log(choice.id)
-         break;
-      case 'blue':
-         x = 'blue';
-         break;
-      case 'yellow':
-         x = 'yellow';
-         break;
-      case 'green':
-         x = 'green';
-         break;
-      case 'white':
-         x = 'white';
-         break;
-      case 'black':
-         x = 'black';
-         break;
-   }
+  x = choice.id;
 }
 
 
@@ -323,3 +303,4 @@ function newCanvas(){
    //context.clearRect(0, 0, canvas.width, canvas.height);
    location.reload();
 }
+let Toolbox
