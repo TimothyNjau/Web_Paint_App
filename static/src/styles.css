@@ -1,9 +1,8 @@
 .toolBar {
    background-color: rgb(235, 234, 234);
-
 }
 
-.toolBar>button {
+.toolBar button {
    font: 15px bold Trebuchet MS;
    border: none;
    padding-inline: calc(3vh);

@@ -13,9 +13,12 @@
 <body onload="canv_init()">
    <div class="container-grid">
       <div class="toolBar">
-         <button class="toolBarbtn">File</button>
-         <button class="toolBarbtn">Edit</button>
-         <button class="toolBarbtn">View</button>
+         <button class="toolBarbtn" id="new">New
+         </button>
+         <button class="toolBarbtn" id="save">Save</button>
+         <button class="toolBarbtn" id="view">View</button>
+         
+         
          <div>
             <input type="range" id="rangeSlider" value="0" min="1" max="15">
          </div>
@@ -26,10 +29,10 @@
       <div class="toolBox">
          <button class="toolBoxbtn" id="line" onclick="drawLine()">Line</button>
          <button class="toolBoxbtn" onclick="freeStyle()">Freestyle</button>
-         <button class="toolBoxbtn">Circle</button>
-         <button class="toolBoxbtn">Triangle</button>
-         <button class="toolBoxbtn">Text</button>
-         <button class="toolBoxbtn">Oval</button>
+         <button class="toolBoxbtn" onclick="drawCircle()">Circle</button>
+         <button class="toolBoxbtn" onclick="drawTriangle()">Triangle</button>
+         <button class="toolBoxbtn" onclick="drawRectangle()">Rectangle</button>
+         <button class="toolBoxbtn" onclick="erasefunc()">Eraser</button>
       </div>
       <div class="canvaslayout">
          <canvas id="canvasBox" style="background-color: white;border: 2px solid black;">
