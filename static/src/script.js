@@ -1,215 +1,66 @@
 let canvas, context,
-   prevX = 0, //previous x and y value
-   prevY = 0,
-   currX = 0, // current x and y value
-   currY = 0,
-   canvas_layout, //width & height of canvas 
-   flag = false,
-   drop_flag = false,
-   rangeSlide, outputDiv, thickness,
-   canvasImage, Save,New;
+   prevX = 0, prevY = 0, //previous x and y value
+   currX = 0, currY = 0, // current x and y value
+   canvas_layout, mouseX, mouseY, //width & height of canvas 
+   flag = false, drop_flag = false,
+   rangeSlide, outputDiv;
 
+let canvasImage, Toolbox, Toolboxbtn, Save, New,View, tempPos;
 
-let mouseX = 0, mouseY = 0, existingLines = [];
-
-let Circle = false,
-   Line = false,
-   Triangle = false,
-   Freestyle = false,
-   Rectangle = false;
-
-var x = 'black', //default color of line drawn
+let x = 'black', //default color of line drawn
    y = 2; // default line thicknes
-
-
 //function to initiate the canvas
 function canv_init() {
    canvas = document.querySelector("#canvasBox");
    canvas_layout = document.querySelector(".canvaslayout");
    w = canvas.width = canvas_layout.offsetWidth * 2;
-   h = canvas.height = canvas_layout.offsetHeight
+   h = canvas.height = canvas_layout.offsetHeight;
    context = canvas.getContext('2d');
+   canvas.style.cursor = "crosshair";
+   context.fillStyle = "white";
+   context.fillRect(0,0,w,h);
 
    rangeSlide = document.querySelector("#rangeSlider");
    outputDiv = document.querySelector("#output");
    slideChange();
+   colorClick(this);
    Save = document.querySelector("#save");
-   Save.addEventListener('click',saveCanvas,false);
+   Save.addEventListener('click', saveCanvas, false);
    New = document.querySelector('#new');
-   New.addEventListener('click',newCanvas,false);
-}
+   New.addEventListener('click', newCanvas, false);
+   View = document.querySelector("#view");
+   View.addEventListener("click",()=>{canvas.requestFullscreen();});
 
+   Toolbox = document.querySelectorAll('.toolBox > .toolBoxbtn');
+   Toolbox.forEach(btn => {
+      btn.addEventListener("click", () => {
+         Toolboxbtn = btn.id;
+      });
+   });
+   Listener();
+}
 function slideChange() {
    rangeSlide.addEventListener("input", function () {
       outputDiv.innerHTML = rangeSlide.value;
       y = parseInt(rangeSlide.value);
-      console.log(y);
       return y;
    });
 }
-
-function chooseListener(func) {
-   if (Circle || Freestyle || Line || Triangle || Rectangle) {
-      canvas.addEventListener('mousemove', function (e) { func('move', e) }, false);
-      canvas.addEventListener('mousedown', function (e) { func('down', e) }, false);
-      canvas.addEventListener('mouseup', function (e) { func('up', e) }, false);
-      canvas.addEventListener('mouseout', function (e) { func('out', e) }, false);
-   }
+function Listener() {
+   canvas.addEventListener('mousedown', startDraw, false);
+   canvas.addEventListener('mousemove', draw, false);
+   canvas.addEventListener('mouseup', stopDraw, false);
+   canvas.addEventListener('mouseout', offBound, false);
+   canvas.addEventListener("mouseover", loadImage, false);
 }
 function colorClick(choice) {
-  x = choice.id;
+   x = choice.id;
+   return x;
 }
-
-
-function freeStyle() {
-   // add mouse event listeners
-   Freestyle = true;
-   Line = Circle = false;
-   chooseListener(findxy);
-   function findxy(motion, e) {
-      if (motion == 'down') {
-         prevX = currX;
-         prevY = currY;
-         getCursorCoordinates(e);
-         flag = true;
-         drop_flag = true;
-         if (drop_flag) {
-            draw();
-         }
-      } else if (motion == 'move') {
-         if (flag) {
-            prevX = currX, prevY = currY;
-            getCursorCoordinates(e);
-            context.moveTo(prevX, prevY);
-            context.lineTo(currX, currY);
-            context.strokeStyle = x;
-            context.lineWidth = y;
-            context.stroke();
-         }
-      } else if (motion == 'up' || motion == 'out') {
-         flag = false;
-      }
-   }
-
-   function draw() {
-      context.beginPath();
-      context.fillStyle = x;
-      context.fillRect(currX, currY, y, 2);
-      context.closePath();
-      drop_flag = false;
-   }
-}
-
 function getCursorCoordinates(e) {
    currX = e.clientX - canvas.offsetLeft;
    currY = e.clientY - canvas.offsetTop;
-   console.log(currX, currY);
    return { currX: currX, currY: currY };
-}
-
-function drawLine() {
-   Line = true;
-   Freestyle = Circle = false;
-   chooseListener(draw_Line);
-   function draw_Line(motion, e) {
-      if (motion == 'down') {
-         getImage();
-         if (!flag) {
-            getCursorCoordinates(e);
-            prevX = currX;
-            prevY = currY;
-            flag = true;
-         }
-
-         draw_L();
-      } else if (motion == 'move') {
-         mouseX = e.clientX - canvas.offsetLeft;
-         mouseY = e.clientY - canvas.offsetTop;
-         console.log(mouseX, mouseY);
-         putImage();
-         draw_L();
-      } else if (motion == 'up') {
-         if (flag) {
-            existingLines.push({
-               startX: prevX,
-               startY: prevY,
-               endX: mouseX,
-               endY: mouseY
-            })
-            flag = false;
-         }
-         //putImage();
-         draw_L();
-      } else if (motion == 'out') {
-         flag = false;
-      }
-   }
-   function draw_L() {
-      //context.fillStyle = x;
-      context.fillRect(currX, currY, y, 2);
-      context.strokeStyle = x;
-      context.lineWidth = y;
-      context.beginPath();
-
-      for (var i = 0; i < existingLines.length; ++i) {
-         let line = existingLines[i];
-         context.moveTo(line.startX, line.startY);
-         context.lineTo(line.endX, line.endY);
-      }
-      context.stroke();
-      if (flag) {
-         context.strokeStyle = x;
-         context.beginPath();
-         context.moveTo(prevX, prevY);
-         context.lineTo(mouseX, mouseY);
-         context.stroke();
-      }
-   }
-}
-function erasefunc() {
-   x = "white";
-   y = 10;
-   canvas.style.cursor = "crosshair";
-   freeStyle();
-}
-function drawCircle() {
-   Circle = true;
-   Freestyle = Line = false;
-   chooseListener(draw_Circle);
-   let tempX, tempY, radius;
-
-   function draw_Circle(motion, e) {
-      if (motion == 'down') {
-         if (!flag) {
-            startLocation = getCursorCoordinates(e);
-            flag = true;
-            getImage();
-         }
-      } else if (motion == 'up') {
-         flag = false;
-         pos = getCursorCoordinates(e);
-         putImage(); //this make sures that the image is not dragged.
-         draw_C(pos);
-      } else if (motion == 'move') {
-         if (flag) {
-            putImage();
-            let pos = getCursorCoordinates(e);
-            draw_C(pos);
-         }
-      } else if (motion == 'out') {
-         flag = false;
-      }
-   }
-   function draw_C(pos) {
-      tempX = startLocation.currX;
-      tempY = startLocation.currY;
-      context.strokeStyle = x;
-      context.lineWidth = y;
-      radius = Math.sqrt(Math.pow((tempX - pos.currX), 2) + Math.pow((tempY - pos.currY), 2));
-      context.beginPath();
-      context.arc(tempX, tempY, radius, 0, 2 * Math.PI, false);
-      context.stroke();
-   }
 }
 function getImage() {
    canvasImage = context.getImageData(0, 0, canvas.width, canvas.height);
@@ -217,90 +68,187 @@ function getImage() {
 function putImage() {
    context.putImageData(canvasImage, 0, 0);
 }
-function drawTriangle() {
-   Triangle = true;
-   Freestyle = Circle = Line = false;
-   chooseListener(draw_Triangle);
-   var tempPos;
-   function draw_Triangle(motion, e) {
-      if (motion == 'down') {
-         if (!flag) {
-            tempPos = getCursorCoordinates(e);
-            getImage();
-            flag = true;
-         }
-      } else if (motion == 'up') {
-         flag = false;
-         putImage();
-         draw_T();
-      } else if (motion == 'move') {
-         if (flag) {
-            putImage();
-            prevX = tempPos.currX;
-            prevY = tempPos.currY;
-            getCursorCoordinates(e);
-            draw_T();
-         }
-      } else if (motion == 'out') {
-         flag = false;
-      }
-   }
-   function draw_T() {
-      context.lineWidth = y;
-      context.strokeStyle = x;
-      context.beginPath();
-      context.moveTo(prevX, prevY);
-      context.lineTo(currX, currY);
-      context.lineTo(prevX * 2 - currX, currY);
-      context.closePath();
-      context.stroke();
-   }
+function saveCanvas() {
+   let link = document.createElement("a");
+   link.download = `CanvasImage.png`;
+   link.href = canvas.toDataURL();
+   link.click();
 }
-function drawRectangle() {
-   Rectangle = true;
-   chooseListener(draw_Rectangle);
-   let tempPos;
-   function draw_Rectangle(motion, e) {
-      if (motion == 'down') {
-         if (!flag) {
-            tempPos = getCursorCoordinates(e);
-            flag = true;
-            getImage();
-         }
-      } else if (motion == 'move') {
-         if (flag) {
-            prevX = tempPos.currX, prevY = tempPos.currY;
-            getCursorCoordinates(e);
-            putImage();
-            draw_Rect();
-         }
-
-      } else if (motion == 'up') {
-         flag = false;
-         getCursorCoordinates(e);
-         putImage();
-         draw_Rect();
-      } else if (motion == 'out') {
-         flag = false;
-      }
-   }
-   function draw_Rect() {
-      context.beginPath();
-      context.lineWidth = y;
-      context.strokeStyle = x;
-      context.strokeRect(currX,currY,prevX-currX,prevY-currY);
-      context.closePath();
-   }
-}
-
-function saveCanvas(){
-   let link = document.createElement("a"); 
-   link.download = `${Date.now()}.jpg`; 
-    link.href = canvas.toDataURL(); 
-    link.click();
-}
-function newCanvas(){
+function newCanvas() {
    //context.clearRect(0, 0, canvas.width, canvas.height);
    location.reload();
 }
-let Toolbox
+function loadImage(e) {
+   getImage();
+   putImage();
+   if (Toolboxbtn == "line") {
+      return x, y;
+   }
+}
+function startDraw(e) {
+   if (Toolboxbtn == "line") {
+      getImage();
+      if (!flag) {
+         getCursorCoordinates(e);
+         prevX = currX;
+         prevY = currY;
+         context.strokeStyle = x;
+         context.lineWidth = y;
+         flag = true;
+      }
+   }
+   else if (Toolboxbtn == "freestyle") {
+      prevX = currX, prevY = currY;
+      getCursorCoordinates(e);
+      flag = drop_flag = true;
+      if (drop_flag) {
+         drawFree(x, y);
+      }
+   }
+   else if (Toolboxbtn == "eraser") {
+      getImage();
+      if (!flag) {
+         prevX = currX, prevY = currY;
+         getCursorCoordinates(e);
+         flag = true;
+         drop_flag = true;
+      } if (drop_flag) { drawFree("white",6); }
+   }
+   else if (Toolboxbtn == "rectangle" || "triangle" || "circle") {
+      if (!flag) {
+         tempPos = getCursorCoordinates(e);
+         getImage();
+         flag = true; drop_flag = false;
+      }
+   }
+}
+function draw(e) {
+   switch (Toolboxbtn) {
+      case "line":
+         drawLine(e);
+         break;
+      case "freestyle":
+         freeStyle(e);
+         break;
+      case "rectangle":
+         drawRectangle(e);
+         break;
+      case "circle":
+         drawCircle(e);
+         break;
+      case "triangle":
+         drawTriangle(e);
+         break;
+      case "eraser":
+         erasefunc(e);
+         break;
+      default:
+         freeStyle(e);
+   }
+}
+function drawFree(a, b) {
+   context.beginPath();
+   context.lineWidth = b;
+   context.strokeStyle = a;
+   context.fillStyle = a;
+   context.fillRect(currX, currY, b, 2);
+}
+function stopDraw(e) {
+   if (Toolboxbtn == "line") {
+      if (flag) {
+         getImage();
+         putImage();
+         flag = false;
+      }
+   } else if (Toolboxbtn == "rectangle") {
+      flag = false;
+   } else if (Toolboxbtn == "circle" || "triangle" || "freestyle" || "eraser") { flag = false; }
+}
+function offBound(e) {
+   if (Toolboxbtn == "rectangle" || "circle" || "triangle" || "line" || "freestyle" || "eraser") { flag = false; }
+}
+function freeStyle(e) {
+   if (flag) {
+      prevX = currX, prevY = currY;
+      getCursorCoordinates(e);
+      context.moveTo(prevX, prevY);
+      context.lineTo(currX, currY);
+      context.strokeStyle = x;
+      context.lineWidth = y;
+      context.stroke();
+   }
+}
+function drawLine(e) {
+   mouseX = e.clientX - canvas.offsetLeft,
+      mouseY = e.clientY - canvas.offsetTop;
+   if (flag) {
+      putImage();
+      context.beginPath();
+      context.strokeStyle = x;
+      context.lineWidth = y;
+      context.moveTo(prevX, prevY);
+      context.lineTo(mouseX, mouseY);
+      context.stroke();
+      context.closePath();
+   }
+}
+function drawRectangle(e) {
+   if (flag) {
+      prevX = tempPos.currX; prevY = tempPos.currY;
+      getCursorCoordinates(e);
+      putImage();
+      draw_Rect();
+      drop_flag = true;
+   }
+}
+function draw_Rect() {
+   context.beginPath();
+   context.lineWidth = y;
+   context.strokeStyle = x;
+   context.fillStyle = x;
+   context.strokeRect(currX, currY, prevX - currX, prevY - currY);
+}
+function drawCircle(e) {
+   if (flag) {
+      putImage();
+      pos = getCursorCoordinates(e);
+      draw_C(pos);
+   }
+}
+function draw_C(pos) {
+   let tempX, tempY, radius;
+   tempX = tempPos.currX, tempY = tempPos.currY;
+   radius = Math.sqrt(Math.pow((tempX - pos.currX), 2) + Math.pow((tempY - pos.currY), 2));
+   context.beginPath();
+   context.strokeStyle = x;
+   context.lineWidth = y;
+   context.arc(tempX, tempY, radius, 0 * Math.PI, 2 * Math.PI, false);
+   context.stroke();
+}
+function drawTriangle(e) {
+   if (flag) {
+      putImage();
+      prevX = tempPos.currX, prevY = tempPos.currY;
+      getCursorCoordinates(e);
+      draw_T();
+   }
+}
+function draw_T() {
+   context.beginPath();
+   context.lineWidth = y;
+   context.strokeStyle = x;
+   context.moveTo(prevX, prevY);
+   context.lineTo(currX, currY);
+   context.lineTo(prevX * 2 - currX, currY);
+   context.closePath();
+   context.stroke();
+}
+function erasefunc(e) {
+   if (flag) {
+      prevX = currX, prevY = currY;
+      getCursorCoordinates(e);
+      context.moveTo(prevX, prevY);
+      context.lineTo(currX, currY);
+      context.stroke();
+   }
+}
