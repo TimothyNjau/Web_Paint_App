@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Web Paint V2</title>
+   <link rel="stylesheet" href="static/styles/stylesheet.css">
+   <link rel="stylesheet" href="static/styles/layout.css">
+   <script src="static/src/script.js" defer></script>
+</head>
+
+<body>
+   <div class="Navbar">
+      <section>
+         <h4>NavBar</h4>
+         <div><button>New</button></div>
+         <div><button>Save</button></div>
+         <div><button>View</button></div>
+         <div><button>Tools</button>
+            <div class="dropdownTools">Dropdown
+               <select name="toolSelection" id="toolSelect">
+                  <option value="line">Line</option>
+                  <option value="freestyle">Freestyle</option> 
+                  <option value="rectangle">Rectangle</option>
+                  <option value="triangle">Triangle</option>
+                  <option value="circle">Circle</option>
+               </select>
+            </div>
+         </div>
+         <div><button id="eraser">Eraser</button></div>
+         <div><button>Color</button>
+            <div class="dropdownColor">color palette
+               <select name="colorSelection" id="colorSelect">
+                  <option value="red">red</option>
+                  <option value="blue">BLUE</option>
+               </select>
+            </div>
+         </div>
+      </section>
+   </div>
+   <div class="Canvas-container">
+      <canvas height="100%" width="100%" id="canvas-tmp" style="border:1px solid black">
+      </canvas>
+
+   </div>
+</body>
+
+</html>
