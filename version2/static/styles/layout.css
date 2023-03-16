@@ -1,5 +1,91 @@
 body{
+   margin: 0;
    height: 100vh;
+   background-image: url("../images/forestImage.webp");
+   background-size:cover;
    width: auto;
-   margin: 0 10 auto;
+}
+
+.Navbar{
+   max-height: max-content;
+   /*background-color: rgba(0, 255, 255);*/
+}
+ul {
+   list-style-type: none;
+   margin: 0;
+   padding: 0px;
+   overflow: hidden;
+   height: 100%;
+   text-align: center;
+}
+.Navitems {
+   float:right;
+   margin-right: 30px;
+   padding: 0px;
+}
+.Navtools {
+   float: left;
+   margin-left: 20px;
+   padding: 0px;
+}
+
+.toolSet,.colorPalette, .Navtools .Navdiv, .Navitems .Navdiv{
+   display: inline-block;   
+   padding: 0px;
+   margin: 10px;
+}
+.Navitems> div > button, .Navtools> div > button, #colorPicker{
+   border-radius: 10px;
+   border-style: none;
+   height: 50px;
+   width: 50px;
+   font-style: italic;
+   padding: 5px;
+   font-weight: bold;
+   color: rgb(19, 43, 3);
+   background-color: rgba(127, 194, 192, 0);
+}
+.Navitems > div > button:hover, .Navtools > div > button:hover{
+   box-shadow: 0px 3px 7px ;
+   background-color: rgba(0, 255, 255);
+}
+
+.dropdownColor, .dropdownTools{
+   display: none;
+   position: absolute;
+   margin-top: 0px;
+   padding: 0px;
+   width: auto;
+   z-index: 1;
+}
+.dropdownTools{
+   background-color: aliceblue;
+   width: 150px;
+}
+.toolSet:hover .dropdownTools,.colorPalette:hover .dropdownColor{
+   display: block;
+}
+.toolBarbtn {
+   background-color: aliceblue;
+   border-style: none;
+   width: 100%;
+   font-size: 1.04rem;
+   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+   padding: 10px;
+}
+.toolBarbtn:hover{
+   cursor: pointer;
+   background-color: rgba(127, 194, 192, 0.589);
+}
+.Canvas-container{
+   height: 80%;
+   width: 90vw;
+   margin: auto;
+   margin-top: 10px;
+   margin-left: 70px;
+}
+#labels{
+   float: left;
+   text-align: center;
+   
 }
