@@ -9,42 +9,169 @@
    <link rel="stylesheet" href="static/styles/stylesheet.css">
    <link rel="stylesheet" href="static/styles/layout.css">
    <script src="static/src/script.js" defer></script>
+   <script src="static/src/canvasPicker.js"></script>
 </head>
 
-<body>
+<body onload="canv_init();">
    <div class="Navbar">
       <section>
-         <h4>NavBar</h4>
-         <div><button>New</button></div>
-         <div><button>Save</button></div>
-         <div><button>View</button></div>
-         <div><button>Tools</button>
-            <div class="dropdownTools">Dropdown
-               <select name="toolSelection" id="toolSelect">
-                  <option value="line">Line</option>
-                  <option value="freestyle">Freestyle</option> 
-                  <option value="rectangle">Rectangle</option>
-                  <option value="triangle">Triangle</option>
-                  <option value="circle">Circle</option>
-               </select>
-            </div>
-         </div>
-         <div><button id="eraser">Eraser</button></div>
-         <div><button>Color</button>
-            <div class="dropdownColor">color palette
-               <select name="colorSelection" id="colorSelect">
-                  <option value="red">red</option>
-                  <option value="blue">BLUE</option>
-               </select>
-            </div>
-         </div>
+         <ul>
+            <li class="Navitems">
+               <div class="Navdiv">
+                  <h5 class="header" style="color:rgb(247, 247, 6);">View</h5>
+                  <button id="view"></button>
+               </div>
+            </li>
+            <li class="Navitems">
+               <div class="Navdiv">
+                  <h5 class="header" style="color:rgb(60, 255, 0);">Save</h5>
+                  <button id="save"></button>
+               </div>
+            </li>
+            <li class="Navitems">
+               <div class="Navdiv">
+                  <h5 class="header" style="color:rgb(75, 255, 20);">New</h5>
+                  <button id="new"></button>
+               </div>
+            </li>
+            <li class="Navtools">
+               <div class="toolSet">
+                  <h5 class="header" style="color: rgb(255, 217, 0);">Shapes</h5>
+                  <button class="tools"></button>
+                  <div class="dropdownTools">
+                     <ul style="padding:0px;">
+                        <li>
+                           <button class="toolBarbtn" id="line">Line
+                              <img src="static/images/line.png" alt="">
+                           </button>
+                        </li>
+                        <li>
+                           <button class="toolBarbtn" id="rectangle">Rectangle
+                              <img src="static/images/rectangle.png" alt="">
+                           </button>
+                        </li>
+                        <li>
+                           <button class="toolBarbtn" id="circle">Circle
+                              <img src="static/images/circle.png" alt="">
+                           </button>
+                        </li>
+                        <li>
+                           <button class="toolBarbtn" id="triangle">Triangle
+                              <img src="static/images/triangle.png" alt="">
+                           </button>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </li>
+            <li class="Navtools">
+               <div class="Navdiv">
+                  <h5 class="header" style="color:rgb(255, 0, 43);">Pencil</h5>
+                  <button id="freestyle"></button>
+               </div>
+            </li>
+            <li class="Navtools">
+               <div class="Navdiv">
+                  <h5 class="header" style="color:rgb(255, 0, 212);">Eraser</h5>
+                  <button id="eraser"></button>
+               </div>
+            </li>
+            <li class="Navtools">
+               <div class="colorPalette">
+                  <h5 class="header" id="colorHeader">Color</h5>
+                  <button id="colorPicker"></button>
+                  <div class="dropdownColor">
+                     <canvas style="border:1px solid black" height="200px" width="250px" id="canvas-color"></canvas>
+                  </div>
+               </div>
+            </li>
+            <li class="Navtools">
+               <div class="Navdiv">
+                  <input type="range" id="rangeSlider" value="2" min="1" max="15">
+               </div>
+            </li>
+            <li class="Navtools">
+               <div class="Navdiv">
+                  <output id="output"></output>
+               </div>
+            </li>
+            <li class="Navtools">
+               <div class="Navdiv">
+                  <h5 class="header" style="color:rgb(0, 255, 240);">Theme</h5>
+                  <button id="themeBtn"></button>
+               </div>
+            </li>
+            <li class="Navtools">
+               <div class="Navdiv">
+                  <h5 class="header" style="color:rgb(0, 255, 240);">Trace</h5>
+                  <button id="trace"></button>
+               </div>
+            </li>
+         </ul>
       </section>
    </div>
    <div class="Canvas-container">
-      <canvas height="100%" width="100%" id="canvas-tmp" style="border:1px solid black">
+      <canvas id="canvas-tmp" style="border:1px solid black">
       </canvas>
-
    </div>
 </body>
+<script>
+   let canvas2 = document.querySelector("#canvas-color"),
+      ctxt = canvas2.getContext('2d');
+   var imgData;
+   function colorPicker() {
+      var grad = ctxt.createLinearGradient(0, 0, canvas2.width, 0);
+      grad.addColorStop(0, "rgb(255,0,0)");
+      grad.addColorStop(0.15, "rgb(255,0,255)");
+      grad.addColorStop(0.33, "rgb(0,0,255)");
+      grad.addColorStop(0.49, "rgb(0,255,255)");
+      grad.addColorStop(0.67, "rgb(0,255,0)");
+      grad.addColorStop(0.84, "rgb(255,255,0)");
+      grad.addColorStop(1, "rgb(255,0,0)");
+      ctxt.fillStyle = grad;
+      ctxt.fillRect(0, 0, canvas2.width, canvas2.height);
+
+      grad = ctxt.createLinearGradient(0, 0, 0, canvas2.height);
+      grad.addColorStop(0, "rgba(255,255,255,1)");
+      grad.addColorStop(0.2, "rgba(255,255,255,0)");
+      grad.addColorStop(0.5, "rgba(0,0,0,0)");
+      grad.addColorStop(1, "rgba(0,0,0,1)");
+      ctxt.fillStyle = grad;
+      ctxt.fillRect(0, 0, canvas2.width, canvas2.height);
+
+      canvas2.addEventListener("mouseover", () => {
+         canvas2.style.cursor = "pointer";
+      });
+      canvas2.addEventListener("mousedown", (e) => {
+         colorflag = true;
+         posX = e.clientX - canvas2.offsetLeft;
+         posY = e.clientY - canvas2.offsetTop;
+         getColor();
+      });
+      canvas2.addEventListener("mousemove", (e) => {
+         if (colorflag) {
+            posX = e.clientX - canvas2.offsetLeft;
+            posY = e.clientY - canvas2.offsetTop;
+            getColor();
+         }
+      });
+      canvas2.addEventListener("mouseup", (e) => {
+         colorflag = false;
+      });
+      canvas2.addEventListener("mouseout", () => {
+         var colorpalette = document.querySelector(".dropdownColor");
+         colorpalette.style.display = "none";
+      })
+      function getColor() {
+         imgData = ctxt.getImageData(posX, posY, 1, 1);
+         var R = imgData.data[0],
+            G = imgData.data[1],
+            B = imgData.data[2],
+            A = imgData.data[3],
+            rgba = R + ',' + G + ',' + B + ',' + A;
+         console.log(rgba);
+      }
+   }
+</script>
 
 </html>

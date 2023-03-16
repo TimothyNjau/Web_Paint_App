@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Web Paint V3</title>
+   <link rel="stylesheet" href="static/styles/design.css">
+   <link rel="stylesheet" href="static/styles/layout.css">
+   <script src="static/src/script.js"></script>
+</head>
+<body>
+   <div class="mainContainer" id="theme">
+      <div class="NavBar">
+         <ul class="mainList"> 
+            <li class="listA">
+               <li>
+                  <div class="Navdiv">
+                     <button>Shapes</button>
+                     <div class="dropdownShapes">
+                        <ul>
+                           <li>
+                              <button>Line</button>
+                           </li>
+                           <li>
+                              <button>Rectangle</button>
+                           </li>
+                           <li>
+                              <button>Circle</button>
+                           </li>
+                           <li>
+                              <button>Triangle</button>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </li>
+               <li>
+                  <div class="Navdiv">
+                     <button>Pencil</button>
+                  </div>
+               </li>
+               <li>
+                  <div class="Navdiv">
+                     <button>Eraser</button>
+                  </div>
+               </li>
+               <li>
+                  <div class="Navdiv">
+                     <button>Fill Bucket</button>
+                  </div>
+               </li>
+               <li>
+                  <div class="Navdiv">
+                     <label for="rangeSlide">Choose Thickness</label>
+                     <input id="rangeSlide" type="range" min="1" max="14" value="3">
+                     <output id="thickness">3</output>
+                  </div>
+               </li>
+            </li>
+            <li class="listB">
+               <li>
+                  <div class="Navdiv"> 
+                     <button>Color Picker</button>
+                  </div>
+               </li>
+               <li>
+                  <div class="Navdiv">
+                     <button> Theme</button>
+                  </div>
+               </li>
+               <li>
+                  <div class="Navdiv">
+                     <button>Canvas Background</button>
+                     <div class="dropdownCanvas"></div>
+                  </div>
+               </li>
+            </li>
+            <li class="listC">
+               <li>
+                  <div class="Navdiv">
+                     <button>NEW</button>
+                  </div>
+               </li>
+               <li>
+                  <div class="Navdiv">
+                     <button>SAVE</button>
+                  </div>
+               </li>
+               <li>
+                  <div class="Navdiv">
+                     <button>VIEW</button>
+                  </div>
+               </li>
+            </li>
+         </ul>
+      </div>
+      <div class="canvasContainer">
+         <canvas id="canvas" style="border: 1px solid black;">
+         </canvas>
+      </div>
+   </div>
+</body>
+</html>
